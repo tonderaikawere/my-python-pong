@@ -247,6 +247,7 @@ class Game:
         self.audio.play("hit")
         col = P1_COLOR if idx == 0 else P2_COLOR
         self.particles.emit(int(ball.x), int(ball.y), col, 22)
+        pad.flash_hit()   # white paddle flash
 
     def _apply_pu(self, pu, ball: Ball) -> None:
         collector = 0 if ball.vx < 0 else 1

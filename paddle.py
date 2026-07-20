@@ -20,6 +20,7 @@ class Paddle:
         self.speed  = PADDLE_SPEED
         self.vel_y  = 0.0
         self.pulse  = 0.0
+        self.hit_flash = 0   # ms remaining for white hit-flash
 
         # Power-up state
         self.enlarged = False
@@ -29,6 +30,7 @@ class Paddle:
     # ── Update ────────────────────────────────────────────────────────────────
     def update(self, dt: int) -> None:
         self.pulse += dt * 0.005
+        self.hit_flash = max(0, self.hit_flash - dt)
 
         if self.enlarged or self.shrunk:
             self.pu_timer -= dt
@@ -89,9 +91,14 @@ class Paddle:
             )
         surf.blit(gs, (r.x - pad, r.y - pad))
 
+    def flash_hit(self) -> None:
+        """Trigger a white flash on the paddle."""
+        self.hit_flash = 120   # ms
+
     def _draw_body(self, surf: pygame.Surface) -> None:
-        r = self.rect
-        pygame.draw.rect(surf, self.color, r, border_radius=7)
+        r     = self.rect
+        color = WHITE if self.hit_flash > 80 else self.color
+        pygame.draw.rect(surf, color, r, border_radius=7)
         # Inner highlight stripe
         hi = pygame.Surface((max(2, self.w - 6), max(6, self.h - 12)), pygame.SRCALPHA)
         hi.fill((255, 255, 255, 38))
