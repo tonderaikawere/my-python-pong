@@ -40,10 +40,13 @@ class AIController:
         # Steer paddle toward target
         center = paddle.y + paddle.h / 2
         diff   = self.target_y - center
-        if abs(diff) > 6:
+        speed  = paddle.speed
+        if abs(diff) > 4:
             if diff > 0:
+                paddle.vel_y = min(speed, abs(diff) * 0.25 + speed * 0.5) if self.accuracy > 0.7 else speed
                 paddle.move_down()
             else:
+                paddle.vel_y = min(speed, abs(diff) * 0.25 + speed * 0.5) if self.accuracy > 0.7 else speed
                 paddle.move_up()
         else:
             paddle.stop()
