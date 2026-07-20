@@ -487,6 +487,27 @@ You are free to use, modify, and distribute this code for any purpose, including
 
 ---
 
+## 📋 Changelog
+
+### v1.0.0 — Initial Release
+- ✅ Single-player AI with Easy / Medium / Hard difficulty
+- ✅ Local 2-player split-keyboard multiplayer
+- ✅ 5 power-up types with glow rendering
+- ✅ Particle system with gravity (300 particles max)
+- ✅ Neon ball trail with hot-tip color shift
+- ✅ Speed-reactive ball glow (cyan → orange)
+- ✅ Motion-reactive paddle glow
+- ✅ White hit-flash on paddle contact
+- ✅ Combo scoring system (bigger burst on streaks)
+- ✅ CRT scanline effect on all menu screens
+- ✅ KawerifyTech hexagonal logo badge on splash
+- ✅ Procedural audio — no audio files required
+- ✅ Screen shake with combo scaling
+- ✅ Live FPS counter
+- ✅ Full in-game tutorial README
+
+---
+
 ## 🙏 Credits & Resources
 
 - **[Pygame](https://www.pygame.org/)** — Python game development library
