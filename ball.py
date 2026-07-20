@@ -79,10 +79,17 @@ class Ball:
         n = max(len(self.trail), 1)
         for i, (tx, ty) in enumerate(self.trail):
             frac  = i / n
-            alpha = int(200 * frac * 0.7)
-            size  = max(2, int(BALL_SIZE * 0.55 * frac))
+            alpha = int(200 * frac * 0.75)
+            size  = max(2, int(BALL_SIZE * 0.58 * frac))
+            # Interpolate color: white (newest) -> self.color (oldest)
+            heat  = 1.0 - frac
+            tc    = (
+                int(self.color[0] + (255 - self.color[0]) * heat * 0.6),
+                int(self.color[1] + (255 - self.color[1]) * heat * 0.6),
+                int(self.color[2] + (255 - self.color[2]) * heat * 0.6),
+            )
             ts    = pygame.Surface((size * 2, size * 2), pygame.SRCALPHA)
-            pygame.draw.circle(ts, (*self.color, alpha), (size, size), size)
+            pygame.draw.circle(ts, (*tc, alpha), (size, size), size)
             surf.blit(ts, (int(tx) - size, int(ty) - size))
 
     def _draw_glow(self, surf: pygame.Surface) -> None:
