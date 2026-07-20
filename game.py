@@ -190,7 +190,11 @@ class Game:
             result = ball.update(dt)
             if result == "wall":
                 self.audio.play("wall")
-                self.particles.emit(int(ball.x), int(ball.y), NEON_CYAN, 12)
+                # Directional sparks: always emit from wall edge
+                spark_x = int(ball.x)
+                spark_y = int(ball.y)
+                self.particles.emit(spark_x, spark_y, NEON_CYAN, 16)
+                self.particles.emit(spark_x, spark_y, WHITE, 6)
 
             # Paddle hits
             for idx, pad in enumerate((p1, p2)):
