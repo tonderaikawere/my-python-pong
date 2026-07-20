@@ -59,6 +59,9 @@ class UIManager:
         alpha = int(255 * frac)
         cx    = self.W // 2
 
+        # Draw KawerifyTech logo badge
+        self._draw_kt_logo(cx, self.H // 2 - 205, alpha)
+
         # KawerifyTech logo text
         dev   = self.f_big.render("KawerifyTech", True, NEON_CYAN)
         pre   = self.f_med.render("presents", True, DIM_WHITE)
@@ -245,6 +248,38 @@ class UIManager:
         self.screen.blit(s, (self.W // 2 - s.get_width() // 2, self.H - 28))
 
     # ── Internal helpers ──────────────────────────────────────────────────────
+    def _draw_kt_logo(self, cx: int, cy: int, alpha: int) -> None:
+        """Draw a glowing hexagonal KawerifyTech logo badge."""
+        import math as _m
+        r   = 42
+        pts = [
+            (cx + r * _m.cos(_m.radians(60 * i - 30)),
+             cy + r * _m.sin(_m.radians(60 * i - 30)))
+            for i in range(6)
+        ]
+        # Glow ring
+        for gr in range(r + 20, r, -4):
+            a = max(0, int(alpha * 0.25 * (gr - r) / 20))
+            gs = pygame.Surface((gr * 2 + 4, gr * 2 + 4), pygame.SRCALPHA)
+            gpts = [
+                (gs.get_width() // 2 + gr * _m.cos(_m.radians(60 * i - 30)),
+                 gs.get_height() // 2 + gr * _m.sin(_m.radians(60 * i - 30)))
+                for i in range(6)
+            ]
+            pygame.draw.polygon(gs, (*NEON_CYAN, a), gpts)
+            self.screen.blit(gs, (cx - gr - 2, cy - gr - 2))
+        # Body
+        bg_surf = pygame.Surface((r * 2 + 4, r * 2 + 4), pygame.SRCALPHA)
+        bpts    = [(r + 2 + r * _m.cos(_m.radians(60 * i - 30)),
+                    r + 2 + r * _m.sin(_m.radians(60 * i - 30))) for i in range(6)]
+        pygame.draw.polygon(bg_surf, (*BG_COLOR, alpha), bpts)
+        pygame.draw.polygon(bg_surf, (*NEON_CYAN, alpha), bpts, 3)
+        self.screen.blit(bg_surf, (cx - r - 2, cy - r - 2))
+        # "KT" letter
+        kt = self.f_med.render("KT", True, (*NEON_GREEN, alpha))
+        kt.set_alpha(alpha)
+        self.screen.blit(kt, (cx - kt.get_width() // 2, cy - kt.get_height() // 2))
+
     def _grid(self) -> None:
         for x in range(0, self.W, 80):
             pygame.draw.line(self.screen, GRID_COLOR, (x, 0), (x, self.H))
