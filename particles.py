@@ -29,6 +29,7 @@ class Particle:
         self.y  += self.vy
         self.vx *= 0.92
         self.vy *= 0.92
+        self.vy += 0.08   # subtle gravity
         self.life -= 1
 
     @property
