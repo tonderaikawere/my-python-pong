@@ -88,9 +88,17 @@ class Ball:
     def _draw_glow(self, surf: pygame.Surface) -> None:
         gr = int(self.glow_radius + math.sin(self.pulse) * 5)
         gs = pygame.Surface((gr * 2, gr * 2), pygame.SRCALPHA)
+        # Glow color shifts with speed: cyan (slow) → orange (fast)
+        speed = math.hypot(self.vx, self.vy)
+        t     = min(1.0, (speed - BALL_INIT_SPEED) / (BALL_MAX_SPEED - BALL_INIT_SPEED))
+        gc    = (
+            int(self.color[0] * (1 - t) + NEON_ORANGE[0] * t),
+            int(self.color[1] * (1 - t) + NEON_ORANGE[1] * t),
+            int(self.color[2] * (1 - t) + NEON_ORANGE[2] * t),
+        )
         for r in range(gr, 0, -3):
             a = max(0, int(55 * (r / gr) ** 1.8))
-            pygame.draw.circle(gs, (*self.color, a), (gr, gr), r)
+            pygame.draw.circle(gs, (*gc, a), (gr, gr), r)
         surf.blit(gs, (int(self.x) - gr, int(self.y) - gr))
 
     def _draw_core(self, surf: pygame.Surface) -> None:
