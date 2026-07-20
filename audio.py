@@ -67,12 +67,12 @@ class AudioManager:
             return
         try:
             self._sounds = {
-                "hit"   : _make_tone(440, 0.08, 0.40, "square",   0.005, 0.060),
-                "wall"  : _make_tone(300, 0.06, 0.30, "triangle", 0.005, 0.040),
-                "score" : _make_tone(880, 0.35, 0.45, "sine",     0.010, 0.300),
-                "win"   : _make_tone(660, 0.60, 0.50, "sine",     0.020, 0.500),
-                "pu"    : _make_tone(550, 0.15, 0.40, "triangle", 0.010, 0.100),
-                "menu"  : _make_tone(220, 0.10, 0.25, "sine",     0.010, 0.070),
+                "hit"   : _make_tone(380, 0.09, 0.45, "square",   0.003, 0.070),
+                "wall"  : _make_tone(260, 0.07, 0.30, "triangle", 0.003, 0.050),
+                "score" : _make_tone(740, 0.40, 0.50, "sine",     0.015, 0.350),
+                "win"   : _make_tone(528, 0.80, 0.55, "sine",     0.025, 0.650),
+                "pu"    : _make_tone(660, 0.18, 0.42, "triangle", 0.008, 0.140),
+                "menu"  : _make_tone(196, 0.12, 0.28, "sine",     0.008, 0.090),
             }
         except Exception:
             self.enabled = False
