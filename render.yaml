@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: my-python-pong
+    env: static
+    buildCommand: pip install pygbag && python -m pygbag --build main.py
+    staticPublishPath: ./build/web
+    headers:
+      - path: /*
+        name: Cross-Origin-Opener-Policy
+        value: same-origin
+      - path: /*
+        name: Cross-Origin-Embedder-Policy
+        value: require-corp
