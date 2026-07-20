@@ -69,6 +69,7 @@ class PowerUp:
 
     def update(self, dt: int) -> None:
         self.pulse += dt * 0.006
+        self.angle += dt * 0.002   # slow rotation for animated ring
 
     @property
     def rect(self) -> pygame.Rect:
