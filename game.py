@@ -48,10 +48,13 @@ class Game:
         self.ai:      AIController | None = None
 
         # Effects
-        self.shake        = 0      # frames of screen shake remaining
-        self.hint_timer   = 4_000  # ms to show controls hint
-        self.last_scorer  = -1     # player index of last scorer
-        self.streak       = 0      # consecutive scores by same player
+        self.shake        = 0
+        self.hint_timer   = 4_000
+        self.last_scorer  = -1
+        self.streak       = 0
+        self._fps_clock   = pygame.time.Clock()   # second clock for FPS display
+        self._fps_display = 0.0
+        self._fps_timer   = 0
 
         # Static background surface (grid + bg)
         self._bg = pygame.Surface((self.W, self.H))
@@ -317,6 +320,11 @@ class Game:
 
         p2_name = "AI" if self.mode == "1p" else "P2"
         self.ui.draw_hud(self.score, "P1", p2_name, self.mode)
+
+        # FPS counter (top-right)
+        fps_s = self.ui.f_xs.render(f"FPS: {int(self._fps_clock.get_fps())}", True, GRID_COLOR)
+        self.screen.blit(fps_s, (self.W - fps_s.get_width() - 8, 6))
+        self._fps_clock.tick()   # tick the display clock
 
         if self.hint_timer > 0:
             self.ui.draw_controls_hint(self.mode)
