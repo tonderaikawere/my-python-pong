@@ -39,9 +39,9 @@ PADDLE_MARGIN = 36
 # ── Ball ──────────────────────────────────────────────────────────────────────
 BALL_SIZE       = 14
 BALL_INIT_SPEED = 6
-BALL_MAX_SPEED  = 18
-BALL_SPEED_INC  = 0.25
-TRAIL_LENGTH    = 22
+BALL_MAX_SPEED  = 20
+BALL_SPEED_INC  = 0.28
+TRAIL_LENGTH    = 24
 
 # ── Scoring ───────────────────────────────────────────────────────────────────
 WIN_SCORE = 7
