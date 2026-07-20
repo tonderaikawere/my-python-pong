@@ -285,6 +285,12 @@ class UIManager:
             pygame.draw.line(self.screen, GRID_COLOR, (x, 0), (x, self.H))
         for y in range(0, self.H, 80):
             pygame.draw.line(self.screen, GRID_COLOR, (0, y), (self.W, y))
+        # Subtle animated scanlines
+        offset = int(self.t * 40) % 6
+        for y in range(offset, self.H, 6):
+            scan = pygame.Surface((self.W, 1), pygame.SRCALPHA)
+            scan.fill((0, 0, 0, 18))
+            self.screen.blit(scan, (0, y))
 
     def _title_banner(self) -> None:
         cx    = self.W // 2
