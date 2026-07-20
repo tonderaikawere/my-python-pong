@@ -74,11 +74,14 @@ class Paddle:
         gw  = self.w + pad * 2
         gh  = self.h + pad * 2
         gs  = pygame.Surface((gw, gh), pygame.SRCALPHA)
-        a   = int(abs(math.sin(self.pulse)) * 55 + 18)
+        # Brighter glow when moving, dimmer at rest
+        base_a = int(abs(math.sin(self.pulse)) * 55 + 18)
+        if self.vel_y != 0:
+            base_a = min(110, base_a + 55)
         for i in range(5, 0, -1):
             pw = self.w + i * 4
             ph = self.h + i * 4
-            ia = max(0, a - i * 7)
+            ia = max(0, base_a - i * 7)
             pygame.draw.rect(
                 gs, (*self.color, ia),
                 ((gw - pw) // 2, (gh - ph) // 2, pw, ph),
