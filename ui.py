@@ -296,8 +296,10 @@ class UIManager:
         cx    = self.W // 2
         title = self.f_big.render("My Python Pong", True, NEON_CYAN)
         sub   = self.f_sm.render("by KawerifyTech", True, NEON_GREEN)
+        ver   = self.f_xs.render(f"v{VERSION}", True, GRID_COLOR)
         self.screen.blit(title, (cx - title.get_width() // 2, 80))
         self.screen.blit(sub,   (cx - sub.get_width()   // 2, 144))
+        self.screen.blit(ver,   (cx - ver.get_width()   // 2, 172))
 
     def _footer(self) -> None:
         f = self.f_xs.render("© 2024 KawerifyTech · kawerifytech.com", True, GRID_COLOR)
