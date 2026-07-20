@@ -50,6 +50,8 @@ class Game:
         # Effects
         self.shake        = 0      # frames of screen shake remaining
         self.hint_timer   = 4_000  # ms to show controls hint
+        self.last_scorer  = -1     # player index of last scorer
+        self.streak       = 0      # consecutive scores by same player
 
         # Static background surface (grid + bg)
         self._bg = pygame.Surface((self.W, self.H))
@@ -223,11 +225,18 @@ class Game:
 
     def _do_score(self, scorer: int, ball_y: float, color: tuple) -> None:
         self.score[scorer] += 1
+        # Combo tracking
+        if self.last_scorer == scorer:
+            self.streak += 1
+        else:
+            self.streak     = 1
+            self.last_scorer = scorer
         self.ui.flash_score(scorer)
         self.audio.play("score")
         wall_x = self.W if scorer == 0 else 0
-        self.particles.emit_burst(wall_x, int(ball_y), color, 55)
-        self.shake = 14
+        burst  = 55 + min(30, self.streak * 8)   # bigger burst on combo
+        self.particles.emit_burst(wall_x, int(ball_y), color, burst)
+        self.shake = 14 + min(10, self.streak * 2)
 
     def _paddle_hit(self, ball: Ball, pad: Paddle, idx: int) -> None:
         # Positional correction
